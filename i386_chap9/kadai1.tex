@@ -1,0 +1,36 @@
+\chapter{コンパイラを使用せず，アセンブリ，機械語のみでのソートアルゴリズムの記述}
+\vspace{-1cm}
+\section{目的}
+コンパイラとは，高級言語を「機械がすぐに実行できる形」に翻訳するものである．本課題は，これを使用せず直接「機械がすぐに実行できる形」の言語（今回はアセンブリ言語）で記述できることを示すことである．
+
+\section{実験方法}
+第0章に示した条件を満たすよう，高級言語で記述したものと同じ挙動をするようなソートアルゴリズムをアセンブリ言語で記述する．これを実行可能ファイルに変換し，期待された結果が出力されるか確認する．\\
+実行コマンドは以下であり．
+print\_eax.s，test\_sort.s，sort.sに対して操作を行う．print\_eax.sはレジスタに保存された値を10進数で出力するものである．
+\begin{lstlisting}[numbers={none}, caption={実行コマンド}, label={fig:実行コマンド}]
+$ nasm -felf print_eax.s
+$ nasm -felf test_sort.s
+$ nasm -felf sort.s
+$ ld -m elf_i386 print_eax.o test_sort.o sort.o
+$ ./a.out
+\end{lstlisting}
+
+\section{実験結果}
+\begin{table}[h]
+  \centering
+   \begin{minipage}{0.45\textwidth}
+     a.outを実行した結果，右のような結果が得られた．\\
+   \end{minipage}
+   \hfill
+   \begin{minipage}{0.45\textwidth}
+     \centering
+     \begin{tabular}{c|cccccccccccc}
+       入力 & 1 & 3 & 5 & 7 & 9 & 2 & 4 & 6 & 8 & 0 & 1 & 2\\\hline
+       期待出力 & 0 & 1 & 1 & 2 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+       出力 & 0 & 1 & 1 & 2 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+     \end{tabular}
+   \end{minipage}
+\end{table}
+\vspace{-0.5cm}
+\section{考察}
+実験結果から，「1以上30万個以下の0以上$2^{31}$未満のダブルワード」に関してはアセンブリ言語でソートアルゴリズムが記述可能であると言える．この条件を満たさない場合のソートアルゴリズムも記述可能であるかは定かでない．

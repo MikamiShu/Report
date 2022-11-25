@@ -1,0 +1,51 @@
+\documentclass[10pt,a4j]{jsreport}
+\usepackage{url}
+\usepackage{float}
+\usepackage{listings,jvlisting}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage[dvipdfmx]{color}
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+\setcounter{chapter}{-1}
+
+\title{情報学郡実験第2 アセンブリ言語を用いたソートアルゴリズムの実装}
+\author{1250372 三上柊}
+\date{\today}
+\begin{document}
+\maketitle
+
+\input{first.tex}
+
+\input{kadai1.tex}
+
+\input{kadai2.tex}
+
+\input{kadai3.tex}
+
+\input{kadai4.tex}
+
+\input{kadai5.tex}
+
+\input{sorce.tex}
+
+\begin{thebibliography}{2}
+\bibitem{1} \url{https://lms.kochi-tech.ac.jp/pluginfile.php/147527/mod_resource/content/2/sample.pdf} 高田喜郎，情報学郡実験第2テキスト
+\bibitem{2} アルゴリズムとデータ構造[第2版]. 情報工学レクチャーシリーズ. 森北出版.2016
+  \end{thebibliography}
+\end{document}

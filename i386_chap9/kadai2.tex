@@ -1,0 +1,84 @@
+\chapter{高級言語との比較}
+\section{目的}
+高級言語とは，人間が理解しやすい命令や規則が設定されたプログラミング言語（抽象度が低級言語よりも高い言語）のことであり、低級言語はコンピュータが実行できる形の言語である．これらで同じアルゴリズムを記述した時，両者にどのような（ソースコード記述量，コードの複雑さ等）差が現れるかを検証するのが本実験の目的である．今回は高級言語にJava言語，低級言語にアセンブリ言語を使用する．
+
+\section{実験方法}
+実際にソートアルゴリズムを高級言語，低級言語で記述する．その中で同処理をしている部分に着目し，行数，コードの複雑さを比較する．コードの複雑さは同じ処理をするのに必要な手順の量によって判断する．
+
+\section{実験結果}
+実際に記述，比較した結果，\ref{fig:ソースコード}と\ref{tab:対応表}という2つの表が得られた．
+
+\section{考察}
+ 表\ref{fig:ソースコード}を参照すると，同じ処理をするのに必要なコード量はアセンブリ言語のほうが増加している．\\
+ \ \ またコードの複雑さに関して，表\ref{tab:対応表}を参照すると，同じ処理を行うのにかかる手順はアセンブリ言語のほうが多いため，コードの複雑さにも差が現れている．
+ \ \ 選択ソートアルゴリズムに関してアセンブリ言語の方がコードが長くなるのは，Java言語ではi番目の配列の値とその他の値の比較が1行で行えるのに対し，アセンブリ言語では同じ処理を行うのに「指定したアドレス番地の値を一度レジスタに保存」と「保存されたレジスタの値とその他の値を比較」という2手順が必要であり，これらは2行に分けて書かれることが多いためだと考察できる．データの入れ替えも同様である．\\
+ \ \ 今回の実験により，「選択ソートアルゴリズム」を記述する際は高級言語を使用ことが好ましいことが明らかになったが，その他のソート（ソートに限らないが）アルゴリズムも高級言語を使用するのが好ましいのかは定かでない．
+
+
+
+
+
+\begin{table}[h]
+  \caption{コード量の比較}
+  \label{fig:ソースコード}
+\begin{minipage}[t]{0.6\linewidth}
+  \begin{lstlisting}[caption={Java言語での記述例}]
+int max_index = 0;
+int max = 0;
+for (int i = data.length - 1; i > 0; i--) {
+    max = data[0];
+    max_index = 0;
+    for (int j = 1; j <= i; j++) {
+        if (data[j] >= max) {
+            max = data[j];
+            max_index = j;
+        }
+    }
+    int m = data[max_index];
+    data[max_index] = data[i];
+    data[i] = m;
+}
+  \end{lstlisting}
+\end{minipage}
+\begin{minipage}[t]{0.4\linewidth}
+  \begin{lstlisting}[caption={アセンブリ言語での記述例}]
+loop0:
+  cmp   ecx,  0  
+  jle   endp
+  mov   edx,  [ebx]   
+  mov   eax,  0       
+  mov   edi,  1
+  loop1:
+    cmp   edi,  ecx   
+    jg    loop0l
+    mov   esi,  [ebx + edi*4] 
+    cmp   esi,  edx       
+    jge   then
+    jmp   endif
+    then:
+      mov edx,  [ebx + edi*4] 
+      mov eax,  edi           
+    endif:
+      inc edi
+      jmp loop1
+  loop0l:
+    mov   esi,  [ebx + eax*4]   
+    mov   edi,  [ebx + ecx*4]  
+    mov   [ebx + eax*4],  edi  
+    mov   [ebx + ecx*4],  esi 
+    dec   ecx
+    jmp   loop0
+  \end{lstlisting}
+\end{minipage}
+\end{table}
+\begin{table}[h]
+  \caption{ソースコードの同処理手順行対応表（一部）}
+  \label{tab:対応表}
+  \centering
+  \begin{tabular}{cll}
+    処理内容 & Java & アセンブリ\\ \hline
+    ループ2内条件比較 & 7 & 10 - 11\\
+    最大値の比較，更新 & 7 - 11 & 10 - 17\\
+    data[max\_index]とdata[i]の入れ替え & 12 - 14 & 21 - 24\\ \hline
+  \end{tabular}
+\end{table}

@@ -1,0 +1,95 @@
+\chapter*{ソースコード}
+
+\begin{lstlisting}[caption={Java}]
+  public class sort {
+    static int[] data1 = new int[2];
+    static int ndata = data1.length;
+    static int max = 0;
+
+    public static void main(String[] args) {
+      buble(data1);
+    }
+
+    private static void buble(int[] data) {
+      long startTime = System.nanoTime();
+      int max_index = 0;
+      for (int i = ndata - 1; i > 0; i--) {
+        max = data[0];
+        max_index = -0;
+        for (int j = 1; j <= i; j++) {
+          if (data[j] >= max) {
+            max = data[j];
+            max_index = j;
+          }
+        }
+        int m = data[max_index];
+        data[max_index] = data[i];
+        data[i] = m;
+      }
+      long endTime = System.nanoTime();
+      System.out.println("実行時間" + (endTime - startTime) + "ns");
+    }
+  }
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[caption={アセンブリ}]
+  section .text
+  global  sort
+  sort:
+  push  esi
+  push  edi
+  push  edx
+  push  ecx
+  push  ebx
+  push  eax
+
+  mov   eax,  0 
+  mov   edx,  0 
+  dec   ecx
+  loop0:
+  cmp   ecx,  0
+  jle   endp
+  mov   edx,  [ebx] 
+  mov   eax,  0     
+
+  mov   edi,  1 
+
+  loop1:
+  cmp   edi,  ecx   
+  jg    loop0l
+
+  mov   esi,  [ebx + edi*4]
+  cmp   esi,  edx      
+  jge   then
+  jmp   endif
+
+  then:
+  mov edx,  [ebx + edi*4] 
+  mov eax,  edi          
+  endif:
+  inc edi
+  jmp loop1
+
+  loop0l:
+  push esi
+  push edi
+  mov   esi,  [ebx + eax*4]   
+  mov   edi,  [ebx + ecx*4]   
+  mov   [ebx + eax*4],  edi   
+  mov   [ebx + ecx*4],  esi   
+  pop edi
+  pop esi
+  dec   ecx
+  jmp   loop0
+  
+  endp:
+  pop eax
+  pop ebx
+  pop ecx
+  pop edx
+  pop edi
+  pop esi
+  ret    
+\end{lstlisting}

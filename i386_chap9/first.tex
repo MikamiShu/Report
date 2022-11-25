@@ -1,0 +1,24 @@
+\chapter{本課題に関して}
+本課題で作成するアルゴリズムが満たすべき条件は，
+\begin{itemize}
+\item 指定された主記憶領域のダブルワード列を\textbf{昇順}に整列すること
+\item 整列対象の先頭番地がebxに，ダブルワードの個数がecxに格納されてsortに渡される
+\item sortはebxが指す番地から始まるecx個のダブルワードからなる領域の中身を書き換える
+\item 整列対象のダブルワードは$0$以上$2^{31}$未満である
+\item ダブルワードの個数は1個以上30万個以下である
+\item sort.s には，サブルーチン sort の定義（及び，整列対象以外にこのサブルーチンが必要とするデータ領域等の定義）のみ記述すること。特に，sort.s の中でラベル \_start を定義してはいけない。
+\item ラベル sort をglobal宣言すること。
+  \item sort は，標準出力に何も出力しないこと。
+  \item sort の呼び出し前と復帰後で汎用レジスタの値が変化しないようにすること。
+\end{itemize}
+である．これを満たすよう作成したソートアルゴリズム（sort.s）に対して実験を行う．\\
+また，すべての実験を行うに際して使用したコンピュータを以下に示しておく．
+\begin{lstlisting}[numbers={none}, caption={使用したコンピュータとソフトウェア}]
+$ uname -a
+Linux KUT20VLIN -462 5.4.0 -70 - generic #78~18.04.1 - Ubuntu SMP Sat Mar 20 14:10:07 UTC
+2021 x86_64 x86_64 x86_64 GNU/ Linux
+$ nasm --version
+NASM version 2.13.02
+$ ld --version
+GNU ld (GNU Binutils for Ubuntu ) 2.30
+\end{lstlisting}
